@@ -64,7 +64,6 @@ The agent called `get_me`, `find_leads`, `enrich` three times and `verify_email`
 
 1 credit is about $0.01. New workspaces start with 300 free credits. Current prices are at [docs.layrcake.dev/pricing.html](https://docs.layrcake.dev/pricing.html).
 
-
 Use the whole toolkit, or single tools. Tools built from the same `LayrcakeSession` share one run:
 
 ```python
@@ -100,7 +99,6 @@ The tools of one run share a `LayrcakeSession` from `layrcake.agent_tools`, the 
 
 Every call goes through the official [`layrcake`](https://pypi.org/project/layrcake/) Python SDK, which handles authentication, retries and typed errors.
 
-
 ## Configuration
 
 | Argument | Default | Meaning |
@@ -125,8 +123,6 @@ LAYRCAKE_API_KEY=... uv run pytest -m live tests/integration_tests   # dry runs 
 ```
 
 Unit tests run against a mocked API and include LangChain's standard tool tests from `langchain-tests`. The run rules are tested in the SDK.
-
-Until `layrcake` 0.2.0 is on PyPI, `[tool.uv.sources]` in `pyproject.toml` installs the SDK from a local checkout of [layrcake-python](https://github.com/Layrcake-dev/layrcake-python) at `../../layrcake-python`. Delete that table and run `uv lock` before publishing.
 
 ## Links
 

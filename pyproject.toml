@@ -71,11 +71,3 @@ ignore = ["UP045", "UP007", "D105", "D107", "D203", "D213"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D", "RUF012"]
-
-# Local development only, until layrcake 0.2.0 (which adds layrcake.agent_tools) is on PyPI.
-# uv installs the SDK from the sibling checkout below and uv.lock records that path, so
-# `uv lock --check` and `uv sync --locked` match what was tested. pip ignores this table, and the
-# built package's metadata already requires the released SDK. Before publishing: release layrcake
-# 0.2.0, delete this table, run `uv lock`, and commit the new lock.
-[tool.uv.sources]
-layrcake = { path = "../../layrcake-python", editable = true }
