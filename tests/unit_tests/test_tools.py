@@ -1,4 +1,7 @@
-"""LangChain-specific behaviour: the standard tool tests, the toolkit and ToolCall handling."""
+"""LangChain-specific behaviour: the standard tool tests, the toolkit and ToolCall handling.
+
+The run rules themselves are tested once, in the layrcake SDK (tests/test_agent_tools.py).
+"""
 
 from __future__ import annotations
 
@@ -10,6 +13,7 @@ from langchain_core.messages import ToolMessage
 from langchain_core.tools import BaseTool
 from langchain_tests.unit_tests import ToolsUnitTests
 from layrcake import Layrcake
+from layrcake.agent_tools import TOOL_SPECS
 from pydantic import BaseModel
 
 from langchain_layrcake import (
@@ -103,6 +107,12 @@ def test_toolkit_gives_eight_tools_sharing_one_run(tools: dict[str, BaseTool]) -
     ]
     sessions = {id(tool.session) for tool in tools.values()}  # type: ignore[attr-defined]
     assert len(sessions) == 1
+
+
+def test_the_toolkit_exposes_exactly_the_sdk_tools(tools: dict[str, BaseTool]) -> None:
+    assert [(t.name, t.description, t.args_schema) for t in tools.values()] == [
+        (spec.name, spec.description, spec.args) for spec in TOOL_SPECS
+    ]
 
 
 def test_a_full_run_through_tool_calls_stops_at_approval(tools: dict[str, BaseTool], api: MockLayrcake) -> None:

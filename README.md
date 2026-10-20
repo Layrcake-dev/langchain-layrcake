@@ -84,7 +84,7 @@ The `launch_campaign` tool has no `confirmation_token` argument, and the confirm
 
 ## Run rules
 
-The tools of one run share a `LayrcakeSession`. It applies the rules from [layrcake.dev/agents.md](https://layrcake.dev/agents.md) in code:
+The tools of one run share a `LayrcakeSession` from `layrcake.agent_tools`, the one implementation of these rules in the Layrcake Python SDK. It applies the rules from [layrcake.dev/agents.md](https://layrcake.dev/agents.md) in code:
 
 - **Budget.** Every paid call sends what is left of the run budget as `budget_credits`, so the API refuses a call that could cost more. Once the budget is spent, paid tools refuse to run. The default budget is 50 credits.
 - **Dry run.** With `dry_run=True`, every call returns its plan instead: the most it could cost and any limit it would trip. Nothing is looked up or charged.
@@ -118,7 +118,9 @@ uv run pytest tests/unit_tests --disable-socket --allow-unix-socket
 LAYRCAKE_API_KEY=... uv run pytest -m live tests/integration_tests   # dry runs only, charges nothing
 ```
 
-Unit tests run against a mocked API and include LangChain's standard tool tests from `langchain-tests`.
+Unit tests run against a mocked API and include LangChain's standard tool tests from `langchain-tests`. The run rules are tested in the SDK.
+
+Until `layrcake` 0.2.0 is on PyPI, `[tool.uv.sources]` in `pyproject.toml` installs the SDK from a local checkout of [layrcake-python](https://github.com/Layrcake-dev/layrcake-python) at `../../layrcake-python`. Delete that table and run `uv lock` before publishing.
 
 ## Links
 

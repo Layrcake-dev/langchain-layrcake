@@ -13,7 +13,7 @@ authors = [{ name = "Layrcake", email = "founders@layrcake.dev" }]
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "langchain-core>=1.0.0,<2.0.0",
-    "layrcake>=0.1.0,<0.2.0",
+    "layrcake[agents]>=0.2.0,<0.3.0",
     "pydantic>=2.7,<3",
 ]
 keywords = ["langchain", "layrcake", "agents", "tools", "sales", "lead-generation", "email-verification"]
@@ -71,3 +71,11 @@ ignore = ["UP045", "UP007", "D105", "D107", "D203", "D213"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D", "RUF012"]
+
+# Local development only, until layrcake 0.2.0 (which adds layrcake.agent_tools) is on PyPI.
+# uv installs the SDK from the sibling checkout below and uv.lock records that path, so
+# `uv lock --check` and `uv sync --locked` match what was tested. pip ignores this table, and the
+# built package's metadata already requires the released SDK. Before publishing: release layrcake
+# 0.2.0, delete this table, run `uv lock`, and commit the new lock.
+[tool.uv.sources]
+layrcake = { path = "../../layrcake-python", editable = true }

@@ -2,7 +2,8 @@
 
 from importlib import metadata
 
-from langchain_layrcake._core import LayrcakeSession
+from layrcake.agent_tools import LayrcakeSession
+
 from langchain_layrcake.toolkits import LayrcakeToolkit
 from langchain_layrcake.tools import (
     LayrcakeCheckCompanies,

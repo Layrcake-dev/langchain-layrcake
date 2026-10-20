@@ -10,8 +10,6 @@ import httpx
 import pytest
 from layrcake import Layrcake
 
-from langchain_layrcake._core import LayrcakeSession
-
 Answer = Callable[[dict[str, Any]], Any]
 CAMPAIGN_ID = "4f1c2b8e-0b7a-4c1e-9a55-2f6f1d2c3b4a"
 OPERATION_ID = "9b0e6a52-2d4f-4f0a-8f3e-0c1d2e3f4a5b"
@@ -179,8 +177,3 @@ def client(api: MockLayrcake) -> Iterator[Layrcake]:
     with Layrcake(api_key="lc_test", http_client=http, max_retries=0) as layrcake:
         yield layrcake
     http.close()
-
-
-@pytest.fixture
-def session(client: Layrcake) -> LayrcakeSession:
-    return LayrcakeSession(client, budget_credits=100, run_id="run-test", research_timeout=5)

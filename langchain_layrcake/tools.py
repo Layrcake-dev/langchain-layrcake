@@ -1,8 +1,9 @@
 """LangChain tools for the Layrcake API, one per verb.
 
-Each tool validates its arguments with a Pydantic model and hands them to a
-shared `LayrcakeSession`, which calls the official `layrcake` SDK and enforces
-the run rules: the run budget, dry_run, idempotency keys, verified-only
+Each tool takes its name, description and argument model from
+`layrcake.agent_tools` in the official `layrcake` SDK, and hands the model's
+arguments to a shared `LayrcakeSession` from the same module. The session
+enforces the run rules: the run budget, dry_run, idempotency keys, verified-only
 campaigns and a launch that stops at a person's approval.
 """
 
@@ -13,10 +14,9 @@ from typing import Any, ClassVar, Optional, Union
 
 from langchain_core.callbacks import CallbackManagerForToolRun
 from langchain_core.tools import BaseTool
+from layrcake.agent_tools import SPECS, LayrcakeSession, ToolSpec, invalid_arguments
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from pydantic.v1 import ValidationError as ValidationErrorV1
-
-from langchain_layrcake._core import SPECS, LayrcakeSession, ToolSpec, invalid_arguments
 
 __all__ = [
     "LayrcakeCheckCompanies",
