@@ -43,6 +43,12 @@ The agent stops at an approval link. Nothing is sent until a person approves it 
 
 Try it free first: `LayrcakeToolkit(dry_run=True)` makes every call return its cost instead of data and charges nothing.
 
+### A test run
+
+On 20 October 2026 we ran this quickstart with the model `openrouter:anthropic/claude-sonnet-5.5` (through `langchain-openrouter`), `budget_credits=25` and this prompt: "Find 3 heads of sales at software companies in London with 20 to 200 staff, verify their work emails, and draft a short campaign about cutting time spent on lead research."
+
+The agent called `get_me`, `find_leads`, `enrich` three times and `verify_email` twice. One person had no work email, so it called `find_leads`, `enrich` and `verify_email` once more for a replacement, then `create_campaign` and `launch_campaign`. It found 6 people, kept 3 verified emails (1 catch-all) and spent 24.75 of its 25 credits. It stopped at the approval link, and nothing was sent. The run took 67 seconds. The draft emails were signed "[Your name]", so edit the sign-off before you approve.
+
 ## Tools
 
 | Tool | What it does | Cost |
